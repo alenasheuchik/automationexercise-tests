@@ -1,5 +1,5 @@
 ﻿pipeline {
-    agent any   // запускать на любом доступном агенте
+    agent any
 
     stages {
         stage('Checkout') {
