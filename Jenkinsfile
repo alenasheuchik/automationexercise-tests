@@ -12,7 +12,7 @@
         stage('Restore packages') {
             steps {
 
-                bat 'nuget restore AutomationExercise.Tests.sln'
+                bat 'nuget.exe restore AutomationExercise.Tests.sln -PackagesDirectory .\\packages'
             }
         }
 
