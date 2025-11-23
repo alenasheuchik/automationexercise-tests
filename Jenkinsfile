@@ -1,10 +1,10 @@
-pipeline {
-    agent any
+﻿pipeline {
+    agent any   // запускать на любом доступном агенте
 
     stages {
         stage('Checkout') {
             steps {
-			
+
                 checkout scm
             }
         }

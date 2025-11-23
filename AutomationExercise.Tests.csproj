@@ -182,6 +182,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
+    <None Include="Jenkinsfile" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
