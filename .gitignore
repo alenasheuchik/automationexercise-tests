@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+TestResults/
+
+# NuGet
+packages/
+*.nupkg
+
+# Allure
+allure-results/
+allure-report/
+
+# Logs
+*.log
