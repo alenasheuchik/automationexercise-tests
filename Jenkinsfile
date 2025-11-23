@@ -48,3 +48,4 @@ packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
             archiveArtifacts artifacts: 'TestResult.xml', fingerprint: true
         }
     }
+}
