@@ -4,12 +4,11 @@
     stages {
         stage('Checkout') {
             steps {
-
                 checkout scm
             }
         }
 
-        stage('Restore packages') {
+        stage('Restore') {
             steps {
 
                 bat 'nuget.exe restore AutomationExercise.Tests.sln -PackagesDirectory .\\packages'
@@ -18,14 +17,12 @@
 
         stage('Build') {
             steps {
-
                 bat 'msbuild AutomationExercise.Tests.sln /p:Configuration=Debug'
             }
         }
 
-        stage('Run tests') {
+        stage('Test') {
             steps {
-
                 bat '''
 packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
   AutomationExercise.Tests\\bin\\Debug\\AutomationExercise.Tests.dll ^
@@ -34,9 +31,8 @@ packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
             }
         }
 
-        stage('Allure report') {
+        stage('Allure') {
             steps {
-
                 allure([
                     includeProperties: false,
                     jdk: '',
@@ -49,7 +45,6 @@ packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
 
     post {
         always {
-
             archiveArtifacts artifacts: 'TestResult.xml', fingerprint: true
         }
     }
