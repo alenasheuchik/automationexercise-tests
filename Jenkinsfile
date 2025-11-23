@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
     agent any
 
     stages {
@@ -10,42 +10,43 @@
 
         stage('Restore') {
             steps {
-
-                bat 'nuget.exe restore AutomationExercise.Tests.sln -PackagesDirectory .\\packages'
+                dir('AutomationExercise.Tests') {
+                    bat 'nuget.exe is in repo rootnest to .sln bat 'nuget.exe restore AutomationExercise.Tests.sln -PackagesDirectory.\\packages'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                bat 'msbuild AutomationExercise.Tests.sln /p:Configuration=Debug'
+                dir('AutomationExercise.Tests') {
+                    bat 'dotnet build --configuration Debug'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                bat '''
-packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
-  AutomationExercise.Tests\\bin\\Debug\\AutomationExercise.Tests.dll ^
-  --result=TestResult.xml;format=nunit3
-'''
-            }
-        }
-
-        stage('Allure') {
-            steps {
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    results: [[path: 'allure-results']],
-                    reportBuildPolicy: 'ALWAYS'
-                ])
+                dir('AutomationExercise.Tests') {
+                    bat 'dotnet test AutomationExercise.Tests.csproj --logger:"trx;LogFileName=test-result.trx"'
+                }
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'TestResult.xml', fingerprint: true
+
+            script {
+                allure([
+                    includeProperties: false,
+                    jdk: '',
+                    results: [[path: 'AutomationExercise.Tests\\bin\\Debug\\allure-results']],
+                    reportBuildPolicy: 'ALWAYS'
+                ])
+            }
+
+
+            archiveArtifacts artifacts: 'AutomationExercise.Tests\\**\\*.trx', allowEmptyArchive: true
         }
     }
 }
