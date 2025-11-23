@@ -26,7 +26,7 @@ pipeline {
             steps {
                 bat '''
 packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
-  AutomationExercise.Tests\\bin\\Debug\\AutomationExercise.Tests.dll ^
+  bin\\Debug\\AutomationExercise.Tests.dll ^
   --result=TestResult.xml;format=nunit3
 '''
             }
