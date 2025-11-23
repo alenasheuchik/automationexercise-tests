@@ -18,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 // explicit path to MSBuild.exe
-                bat '''"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" AutomationExercise.Tests.sln /p:Configuration=Debug'''
+                bat "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe\" AutomationExercise.Tests.sln /p:Configuration=Debug"
             }
         }
 
