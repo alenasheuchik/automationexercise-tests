@@ -40,15 +40,12 @@ namespace AutomationExercise.Tests.Pages
 
         private readonly By ContinueShoppingButtonLocator =
             By.CssSelector("button.close-modal");
-
         private IWebElement LogoutButton =>
             WaitAndFindElement(LogoutButtonLocator);
-
         public MainPage(IWebDriver driver)
             : base(driver)
         {
         }
-
         public override bool IsOpened()
         {
             return IsElementDisplayed(LoggedInAsLocator);
@@ -127,13 +124,54 @@ namespace AutomationExercise.Tests.Pages
             LogoutButton.Click();
             return new LoginPage(Driver);
         }
+        private void HideAdsIfPresent()
+        {
+            try
+            {
+                var js = (IJavaScriptExecutor)Driver;
+
+                js.ExecuteScript(@"
+                    var iframes = document.querySelectorAll(
+                        'iframe[title=""Advertisement""], iframe[id^=""aswift_""]'
+                    );
+                    for (var i = 0; i < iframes.length; i++) {
+                        iframes[i].style.display = 'none';
+                    }");
+            }
+            catch
+            {
+            }
+        }
+
         public void OpenWomenTopsCategory()
         {
+            HideAdsIfPresent();
+
             var womenToggle = WaitAndFindElement(WomenCategoryToggleLocator);
-            womenToggle.Click();
+            ScrollToElement(womenToggle);
+
+            try
+            {
+                womenToggle.Click();
+            }
+            catch (ElementClickInterceptedException)
+            {
+                var js = (IJavaScriptExecutor)Driver;
+                js.ExecuteScript("arguments[0].click();", womenToggle);
+            }
 
             var topsLink = WaitAndFindElement(WomenTopsSubcategoryLocator);
-            topsLink.Click();
+            ScrollToElement(topsLink);
+
+            try
+            {
+                topsLink.Click();
+            }
+            catch (ElementClickInterceptedException)
+            {
+                var js = (IJavaScriptExecutor)Driver;
+                js.ExecuteScript("arguments[0].click();", topsLink);
+            }
         }
         public string GetCurrentProductsTitle()
         {
