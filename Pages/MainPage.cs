@@ -142,7 +142,6 @@ namespace AutomationExercise.Tests.Pages
             {
             }
         }
-
         public void OpenWomenTopsCategory()
         {
             HideAdsIfPresent();

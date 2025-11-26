@@ -27,9 +27,9 @@ namespace AutomationExercise.Tests
         {
             try
             {
-                var outcome = TestContext.CurrentContext.Result.Outcome.Status;
+                var status = TestContext.CurrentContext.Result.Outcome.Status;
 
-                if (outcome == TestStatus.Failed)
+                if (status == TestStatus.Failed)
                 {
                     var testName = TestContext.CurrentContext.Test.Name;
 
@@ -37,10 +37,16 @@ namespace AutomationExercise.Tests
 
                     if (!string.IsNullOrEmpty(screenshotPath))
                     {
-                        AllureApi.AddAttachment(
-                            "Screenshot",
-                            "image/png",
-                            screenshotPath);
+                        try
+                        {
+                            AllureApi.AddAttachment(
+                                "Screenshot",
+                                "image/png",
+                                screenshotPath);
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
             }

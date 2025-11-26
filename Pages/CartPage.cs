@@ -7,7 +7,6 @@ namespace AutomationExercise.Tests.Pages
 {
     public class CartPage : BasePage
     {
-
         private readonly By CartContainerLocator =
             By.CssSelector("section#cart_items");
 

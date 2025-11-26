@@ -77,5 +77,28 @@ namespace AutomationExercise.Tests.Tests
                     "Главная страница не должна открываться при пустых полях логина/пароля.");
             });
         }
+
+        [Test]
+        [AllureName("Демонстрационный негативный тест (ожидаемо падает)")]
+        [AllureSeverity(SeverityLevel.minor)]
+        public void DemoNegativeLoginTest_ShouldFailAndCreateScreenshot()
+        {
+            LoginPage.Open();
+
+            Assert.That(LoginPage.IsOpened(), Is.True,
+                "Страница логина не открылась.");
+
+            LoginPage.EnterUserName(TestSettings.ValidUserName);
+            LoginPage.EnterPassword("wrong_password");
+            LoginPage.ClickLoginButton();
+
+            Assert.That(LoginPage.IsErrorDisplayed(), Is.True,
+                "Ожидалось сообщение об ошибке логина, но его нет.");
+
+            var errorText = LoginPage.GetErrorText();
+
+            Assert.That(errorText, Is.EqualTo("THIS TEXT SHOULD NEVER MATCH"),
+                "Этот ассерт специально написан так, чтобы тест упал и в Allure попал скриншот текущего состояния страницы.");
+        }
     }
 }
