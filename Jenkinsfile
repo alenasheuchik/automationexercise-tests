@@ -24,12 +24,14 @@ pipeline {
 
         stage('Test') {
             steps {
-        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-            bat '''
+                // If there are failed tests, mark build UNSTABLE but continue pipeline
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    bat '''
 packages\\NUnit.ConsoleRunner.3.17.0\\tools\\nunit3-console.exe ^
   bin\\Debug\\AutomationExercise.Tests.dll ^
   --result=TestResult.xml;format=nunit3
 '''
+                }
             }
         }
 
