@@ -9,7 +9,6 @@ namespace AutomationExercise.Tests.Pages
     {
         private readonly By CartContainerLocator =
             By.CssSelector("section#cart_items");
-
         private readonly By CartRowsLocator =
             By.CssSelector("div.cart_info table tbody tr");
         public CartPage(IWebDriver driver)

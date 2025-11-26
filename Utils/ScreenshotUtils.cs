@@ -13,7 +13,6 @@ namespace AutomationExercise.Tests.Utils
             {
                 return null;
             }
-
             try
             {
                 var takesScreenshot = driver as ITakesScreenshot;
